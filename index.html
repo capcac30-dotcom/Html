@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أداة تشفير by m7d</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        h1 {
+            color: #ffffff;
+            text-align: center;
+            margin-top: 0;
+            border-bottom: 2px solid #444;
+            padding-bottom: 15px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            color: #e0e0e0;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        button {
+            background-color: #333;
+            color: #ffffff;
+            border: 1px solid #555;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+        button:hover {
+            background-color: #4a4a4a;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>أداة التشفير</h1>
+    
+    <textarea id="inputCode" placeholder="ضع الكود أو النص هنا..."></textarea>
+    
+    <div class="buttons">
+        <button onclick="obfuscateCode()">🔒 شفّر الكود</button>
+        <button onclick="copyCode()">📋 نسخ</button>
+    </div>
+    
+    <textarea id="outputCode" placeholder="الكود المشفر سيظهر هنا..." readonly></textarea>
+
+    <div class="footer">
+        by m7d
+    </div>
+</div>
+
+<script>
+    function obfuscateCode() {
+        const originalCode = document.getElementById('inputCode').value;
+        if (!originalCode) {
+            document.getElementById('outputCode').value = "الرجاء إدخال نص أولاً!";
+            return;
+        }
+
+        // تحويل الكود إلى سلسلة من أرقام ASCII
+        let byteTable = [];
+        for (let i = 0; i < originalCode.length; i++) {
+            byteTable.push(originalCode.charCodeAt(i));
+        }
+
+        // بناء الكود المشفر
+        const obfuscatedCode = `(loadstring or load)(string.char(${byteTable.join(',')}))()`;
+        
+        document.getElementById('outputCode').value = obfuscatedCode;
+    }
+
+    function copyCode() {
+        const outputArea = document.getElementById('outputCode');
+        if (outputArea.value) {
+            outputArea.select();
+            document.execCommand('copy');
+            alert('تم نسخ الكود المشفر!');
+        }
+    }
+</script>
+
+</body>
+</html>
